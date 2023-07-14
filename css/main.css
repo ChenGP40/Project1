@@ -1,0 +1,96 @@
+* {
+    outline: solid red 1px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Text Types */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+p {
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: red;
+}
+
+section {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+h1 {
+    background: #e8eff5;
+    background: -moz-linear-gradient(top, #e8eff5 0%, #dee7f0 100%);
+    background: -webkit-linear-gradient(top, #e8eff5 0%,#dee7f0 100%);
+    background: linear-gradient(to bottom, #e8eff5 0%,#dee7f0 100%);
+    padding: 42px 0;
+    color: #0E467A;
+    font-size: 60px;
+    font-weight: normal;
+}
+
+/* Navigation */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background: #31afe9;
+}
+
+.navbarHeader {
+    flex: 100vw;
+    font-size: 300%;
+    font-weight: bold;
+    padding: 10px;
+    background: #094e74;
+}
+
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1em;
+}
+
+.navigationLinks {
+    list-style-type: none;
+    font-size: 150%;
+}
+
+.selected {
+    color: white;
+    font-weight: bold;
+}
+
+/* Main */
+.toolInfo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Side Nav */
+.sideContainer {
+    grid-column: 1 / 2;
+}
+
+.sideNav {
+
+}
+
+.hidden {
+    display: none;
+}
+
+/* Info */
+.info {
+    grid-column: 2 / 5;
+}
