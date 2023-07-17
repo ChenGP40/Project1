@@ -20,11 +20,13 @@ p {
 a {
     text-decoration: none;
     color:#337ab7;
+    transition: .3s ease;
 }
 
 a:hover, .sideNavLinks:hover {
     color:#16446b;
     cursor: pointer;
+    transition: .3s ease;
 }
 
 li {
@@ -120,6 +122,7 @@ h3 {
     font-size: 17px;
     color: #337ab7;
     padding: .3em;
+    text-align: left;
 }
 
 .hidden {
@@ -142,4 +145,26 @@ h3 {
 
 .center {
     text-align: center;
+}
+
+/* Download */
+#downloadForm {
+    max-width: 61%;
+    margin: 0 auto;
+}
+
+label {
+    text-align: left;
+}
+
+.textBox {
+    margin-bottom: 1em;
+}
+
+#downloadBtn {
+    background-color: black;
+    color: white;
+    border: white;
+    border-radius: 5px;
+    padding: .5em;
 }

@@ -127,7 +127,13 @@
         </div>
         <div id="download" class="hidden">
             <h2>Download</h2>
-            <p class="center"> Nothing for now, check back later! </p>
+            <form id="downloadForm">
+                <label for="name">Full name:</label><br>
+                <input type="text" class="textBox" name="name" placeholder="John Doe"><br>
+                <label for="email">Email address:</label><br>
+                <input type="email" class="textBox" name="email" placeholder="johndoe@gmail.com"><br>
+                <input type="submit" id="downloadBtn" name="downloadBtn" value="Download Files">
+            </form>
         </div>
         <div id="news" class="hidden">
             <h2>News and Updates</h2>
