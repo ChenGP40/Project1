@@ -1,5 +1,5 @@
 * {
-    outline: solid red 1px;
+    /* outline: solid red 1px; */
     margin: 0;
     padding: 0;
     text-align: center;
@@ -11,20 +11,28 @@ body {
 }
 
 p {
-
+    font-size: 17px;
+    text-align: left;
+    line-height: 1.75;
+    padding-top: 1em;
 }
 
 a {
     text-decoration: none;
-    color: white;
+    color:#337ab7;
 }
 
-a:hover {
-    color: red;
+a:hover, .sideNavLinks:hover {
+    color:#16446b;
+    cursor: pointer;
+}
+
+li {
+    list-style-type: none;
 }
 
 section {
-    max-width: 60%;
+    max-width: 61%;
     margin: 0 auto;
 }
 
@@ -33,10 +41,23 @@ h1 {
     background: -moz-linear-gradient(top, #e8eff5 0%, #dee7f0 100%);
     background: -webkit-linear-gradient(top, #e8eff5 0%,#dee7f0 100%);
     background: linear-gradient(to bottom, #e8eff5 0%,#dee7f0 100%);
-    padding: 42px 0;
+    padding: .5em 0;
     color: #0E467A;
     font-size: 60px;
     font-weight: normal;
+}
+
+h2 {
+    font-size: 45px;
+    font-weight: normal;
+    color: #272727;
+}
+
+h3 {
+    font-size: 110%;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 1.5em;
 }
 
 /* Navigation */
@@ -53,17 +74,24 @@ h1 {
     font-weight: bold;
     padding: 10px;
     background: #094e74;
+    color: white;
+}
+
+.navigationLinks {
+    color: black;
 }
 
 .navigation {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 1em;
+    padding: .8em;
+    font-weight: bold;
+    font-size: 150%;
 }
 
-.navigationLinks {
-    list-style-type: none;
-    font-size: 150%;
+.navbarHeader:hover, .navigationLinks:hover {
+    color: white;
+    cursor: pointer;
 }
 
 .selected {
@@ -75,6 +103,8 @@ h1 {
 .toolInfo {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 4.5em;
+    margin-top: 4.5em;
 }
 
 /* Side Nav */
@@ -82,8 +112,14 @@ h1 {
     grid-column: 1 / 2;
 }
 
-.sideNav {
+/* .sideNav {
 
+} */
+
+.sideNavLinks {
+    font-size: 17px;
+    color: #337ab7;
+    padding: .3em;
 }
 
 .hidden {
@@ -93,4 +129,17 @@ h1 {
 /* Info */
 .info {
     grid-column: 2 / 5;
+    margin-bottom: 4em;
+}
+
+.indent {
+    margin-left: 40px;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.center {
+    text-align: center;
 }

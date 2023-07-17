@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>PCA-PAM50</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
@@ -21,12 +21,8 @@
     <div class="container">
         <a href="index.html" class="navbarHeader" title="Home">Tools Portal</a>
         <ul class="navigation">
-            <li class="navigationLinks"><b>Available Tools:</b></li>
-            <li class="navigationLinks selected">PCA-PAM50</li>
-            <!-- <li class="navigationLinks"><a href="" title="">Tool2</a></li>
-            <li class="navigationLinks"><a href="" title="">Tool3</a></li>
-            <li class="navigationLinks"><a href="" title="">Tool4</a></li>
-            <li class="navigationLinks"><a href="" title="">Tool5</a></li> -->
+            <li>Available Tools:</li>
+            <li class="selected">PCA-PAM50</li>
         </ul>  
 	</div>
 </nav>
@@ -37,19 +33,106 @@
 <section class="toolInfo">
     <div class="sideContainer">
         <ul class="sideNav">
-            <li id="descriptionTrigger" class="navigationLinks">What is PCA-PAM50?</li>
-            <li id="instructionsTrigger" class="navigationLinks">Instructions</li>
-            <li id="faqTrigger" class="navigationLinks">Frequently Asked Questions</li>
-            <li id="downloadTrigger" class="navigationLinks">Download</li>
-            <li id="newsTrigger" class="navigationLinks">News and Updates</li>
+            <li id="descriptionTrigger" class="sideNavLinks">What is PCA-PAM50?</li>
+            <li id="instructionsTrigger" class="sideNavLinks">Instructions</li>
+            <li id="faqTrigger" class="sideNavLinks">Frequently Asked Questions</li>
+            <li id="downloadTrigger" class="sideNavLinks">Download</li>
+            <li id="newsTrigger" class="sideNavLinks">News and Updates</li>
         </ul>
     </div>
     <div class="info">
-        <div id="description">description</div>
-        <div id="instructions" class="hidden">instructions</div>
-        <div id="faq" class="hidden">faq</div>
-        <div id="download" class="hidden">download</div>
-        <div id="news" class="hidden">news</div>
+        <div id="description">
+            <h2>What is PCA-PAM50?</h2>
+            <p> PCA-PAM50 is used to perform intrinsic subtyping for breast cancer gene expression data. 
+                PCA-PAM50 leverages principal component analysis (PCA) and iterative PAM50 calls to derive the gene expression-based ER status. 
+                This generates an ER-balanced subset which is automatically used for gene centering and subsequent intrinsic calls. 
+                Thus, PCA-PAM50 performs intrinsic subtyping in ER status unbalanced cohorts. </p>
+            
+            <p> Input is just the normalized PAM50 gene expression matrix. </p>
+
+            <p> The package contains two R scripts:<br>
+                <span class="indent">PCA-PAM50.R             → makes use of two functions to make median values and subsequent PAM50 calls.</span><br>
+                <span class="indent">functions_PCA-PAM50.R   → provides necessary functions.</span><br> </p>
+
+            <p> The package comes with a sample/TEST PAM50 matrix to demonstrate running the program:<br>
+                <span class="indent">'TEST.ihc' and 'TEST.matrix' is provided → substitute these to make calls for your data.</span><br>
+                <span class="indent">To make conventional intrinsic calls that are only using IHC, use the function "makeCalls.ihc".</span><br>
+                <span class="indent">Refer to 'PCA-PAM50.R' to learn more.</span><br> </p>
+
+                <h3>Prerequisites</h3>
+
+            <p> <b>Hardware</b><br>
+                PCA-PAM50 is an R script and should run on any computer (Linux/Unix, Windows or Mac) with R installed. 
+                However it has only been tested on Linux/Ubuntu. </p>
+
+            <p> <b>Software</b><br>
+                Required libraries:<br>
+                <span class="indent">gplots</span><br>
+                <span class="indent">RColorBrewer</span><br>
+                <span class="indent">lattice</span><br>
+                <span class="indent">genefilter</span><br>
+                <span class="indent">ctc</span><br>
+                <span class="indent">heatmap.plus</span> </p>
+
+            <p> Libraries can be installed through R Bioconductor like this:<br>
+                <span class="indent">Source("https://bioconductor.org/biocLite.R")<br></span>
+                <span class="indent">BiocLite(<library>)</span> </p>
+
+                <h3>COPYRIGHT AND LICENSE</h3>
+                
+            <p> Copyright 2018 Windber Reseach Institute, Windber, PA - 15963. All Rights Reserved. </p>
+            
+            <p> Contact:<br>
+                <span class="indent">Developer: Praveen K. Raj Kumar [P.RajKumar@wriwindber.org]</span><br>
+                <span class="indent">Lab director: Hai Hu [H.hu@wriwindber.org]</span><br> </p>
+
+            <p> This program is free software: you can redistribute it and/or modify it under
+                the terms of the GNU General Public License as published by the Free Software
+                Foundation, either version 3 of the License, or (at your option) any later
+                version. </p>
+
+            <p> You should have received a copy of the GNU General Public License along with
+                this program. If not, see <a href="http://www.gnu.org/licenses/">GNU licenses</a>. </p>
+        </div>
+        <div id="instructions" class="hidden">
+            <h2>Instructions</h2>
+            <p> The 'bioclassifier_R' folder contains all the functions and fixed parameters. 
+                You should not need to change anything in this folder, but there are some annotation files, the centroids file, 
+                and related information that you may want to be familiar with. </p>
+
+            <p> The directory named 'bioclassifier_example' contains two files - an example input data matrix, and an example of the parameter file to run the algorithm.
+                All changes should be made to this R file, and I have labeled the variables accordingly.  
+                As a first test, simply fill in the correct directory paths and source the file.
+                The output of this run should look like the set of files in the 'sampleOutput' sub-folder. </p>
+
+            <p> As you are probably aware, measurement bias and population bias are often confounded when we attempt cross-platform classification.
+                When the test sample draws from the same population as the training set, then the population bias is less of a problem and simple approaches 
+                to adjusting for measurement bias (gene centering) tend to work quite well. 
+                However, as the test sample deviates from the training sample, 
+                the confounded effects become more difficult to overcome and allow for accurate classification.
+                An example of an extreme case would be a test sample that was all ER+. </p>
+
+            <p> One valuable resource in checking the pre-processing is if you have any true 'normal' samples.  
+                When true normal samples are not called 'normal-like', then it is an indicator of bias. </p>
+
+            <p> You are likely more informed of such issues than myself, but I feel I must give this disclaimer whenever I provide the code.  
+                I would be happy to discuss with you further regarding approaches for minimizing bias.  
+                Please let me know if you are interested, and please let me know if you have trouble running or interpreting the code. </p>
+
+            <p> Joel Parker [parkerjs@email.unc.edu] </p>
+        </div>
+        <div id="faq" class="hidden">
+            <h2>Frequently Asked Questions</h2>
+            <p class="center"> Nothing for now, check back later! </p>
+        </div>
+        <div id="download" class="hidden">
+            <h2>Download</h2>
+            <p class="center"> Nothing for now, check back later! </p>
+        </div>
+        <div id="news" class="hidden">
+            <h2>News and Updates</h2>
+            <p class="center"> Nothing for now, check back later! </p>
+        </div>
     </div>
 </section>
 </main>
