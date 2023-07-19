@@ -1,50 +1,84 @@
-let desc = document.getElementById("description");
-let inst = document.getElementById("instructions");
-let faq = document.getElementById("faq");
-let down = document.getElementById("download");
-let news = document.getElementById("news");
+// Changing between subpages (side navigation)
+const desc = document.getElementById("description");
+const inst = document.getElementById("instructions");
+const faq = document.getElementById("faq");
+const down = document.getElementById("download");
+const news = document.getElementById("news");
 
-document.getElementById("descriptionTrigger").addEventListener("click", triggerDescription);
+let allClasses = [desc, inst, faq, down, news];
+
+var submitHash = ""
+
+function hideAll() {
+allClasses.forEach(function(el) {
+  el.classList.add("hidden")
+})
+}
+
+document.getElementById("descriptionTrigger").addEventListener("click", () => {hideAll(); triggerDescription();})
 function triggerDescription() {
     desc.classList.remove("hidden");
-    inst.classList.add("hidden");
-    faq.classList.add("hidden");
-    down.classList.add("hidden");
-    news.classList.add("hidden");
+    window.location.hash = "#descriptionPage"
 }
 
-document.getElementById("instructionsTrigger").addEventListener("click", triggerInstructions);
+document.getElementById("instructionsTrigger").addEventListener("click", () => {hideAll(); triggerInstructions();})
 function triggerInstructions() {
-    desc.classList.add("hidden");
     inst.classList.remove("hidden");
-    faq.classList.add("hidden");
-    down.classList.add("hidden");
-    news.classList.add("hidden");
+    window.location.hash = "#instructionsPage"
 }
 
-document.getElementById("faqTrigger").addEventListener("click", faqDescription);
-function faqDescription() {
-    desc.classList.add("hidden");
-    inst.classList.add("hidden");
+document.getElementById("faqTrigger").addEventListener("click", () => {hideAll(); triggerFaq();})
+function triggerFaq() {
     faq.classList.remove("hidden");
-    down.classList.add("hidden");
-    news.classList.add("hidden");
+    window.location.hash = "#faqPage"
 }
 
-document.getElementById("downloadTrigger").addEventListener("click", triggerDownload);
+document.getElementById("downloadTrigger").addEventListener("click", () => {hideAll(); triggerDownload();})
 function triggerDownload() {
-    desc.classList.add("hidden");
-    inst.classList.add("hidden");
-    faq.classList.add("hidden");
     down.classList.remove("hidden");
-    news.classList.add("hidden");
+    window.location.hash = "#downloadPage"
 }
 
-document.getElementById("newsTrigger").addEventListener("click", triggerNews);
+document.getElementById("newsTrigger").addEventListener("click", () => {hideAll(); triggerNews();})
 function triggerNews() {
-    desc.classList.add("hidden");
-    inst.classList.add("hidden");
-    faq.classList.add("hidden");
-    down.classList.add("hidden");
     news.classList.remove("hidden");
+    window.location.hash = "#newsPage"
 }
+
+window.addEventListener("load", subpageChanger())
+function subpageChanger() {
+    let hash = window.location.hash;
+    if(hash == "") {
+        triggerDescription();
+    } else if(hash == "#descriptionPage") {
+        triggerDescription();
+    } else if(hash == "#instructionsPage") {
+        triggerInstructions();
+    } else if(hash == "#faqPage") {
+        triggerFaq();
+    } else if(hash == "#downloadPage") {
+        triggerDownload();
+    } else {
+        triggerNews();
+    }
+}
+
+// Download Validation - CHANGE TO JUST ONE BUTTON
+let downloadBtn = document.getElementById("downloadBtn")
+
+document.getElementById("downloadBtn").addEventListener("mouseover", enableBtn())
+function enableBtn() {
+
+}
+
+
+window.addEventListener("load", fileDownloadTrigger())
+function fileDownloadTrigger() {
+    if(blank) {
+        var submitHash = "submitted";
+    } else {
+        var submitHash = ""
+    }
+}
+
+down.classList.remove("disabled");

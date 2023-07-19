@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
-    <link rel="icon" type="image/x-icon" href="images/logo.png">
+    <!-- <link rel="icon" type="image/x-icon" href="images/logo.png"> -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div class="info">
-        <div id="description">
+        <div id="description" class="hidden">
             <h2>What is PCA-PAM50?</h2>
             <p> PCA-PAM50 is used to perform intrinsic subtyping for breast cancer gene expression data. 
                 PCA-PAM50 leverages principal component analysis (PCA) and iterative PAM50 calls to derive the gene expression-based ER status. 
@@ -127,12 +127,15 @@
         </div>
         <div id="download" class="hidden">
             <h2>Download</h2>
+            <p class="center"> To download PCA-PAM50, please enter your full name and email address. </p>
             <form id="downloadForm">
-                <label for="name">Full name:</label><br>
-                <input type="text" class="textBox" name="name" placeholder="John Doe"><br>
-                <label for="email">Email address:</label><br>
-                <input type="email" class="textBox" name="email" placeholder="johndoe@gmail.com"><br>
-                <input type="submit" id="downloadBtn" name="downloadBtn" value="Download Files">
+                <label for="name">Full name:</label>
+                <input type="text" class="textBox" name="firstName" placeholder="First" required>
+                <input type="text" class="textBox" name="lastName" placeholder="Last" required>
+                <label for="email">Email address:</label>
+                <input type="email" class="textBox full" name="email" placeholder="johndoe@gmail.com" required>
+                <input type="submit" id="submitInfo" class="button" name="submitInfo" value="Submit">
+                <a id="downloadBtn" class="button disabled" name="downloadBtn" href="PCA-PAM50.zip" download>Download Files</a>
             </form>
         </div>
         <div id="news" class="hidden">
