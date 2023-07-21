@@ -32,6 +32,10 @@ li {
     list-style-type: none;
 }
 
+hr {
+    max-width: 50%;
+}
+
 section {
     max-width: 61%;
     margin: 0 auto;
@@ -57,7 +61,7 @@ h2 {
 }
 
 h3 {
-    font-size: 110%;
+    font-size: 120%;
     font-weight: bold;
     margin-top: 1.5em;
 }
@@ -137,7 +141,15 @@ h3 {
 }
 
 .indent {
-    margin-left: 40px;
+    padding-left: 2em;
+}
+
+.hangingIndent {
+    text-indent: -2em;
+    padding-left: 2em;
+    font-size: 17px;
+    text-align: left;
+    line-height: 1.75;
 }
 
 .link {
@@ -153,23 +165,23 @@ h3 {
     max-width: 61%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     column-gap: 1em;
 }
 
 label {
     margin-top: 1.5em;
-    grid-column: span 4;
+    grid-column: span 6;
 }
 
 .textBox {
     margin-top: .5em;
     padding: .5em;
-    grid-column: span 2;
+    grid-column: span 3;
 }
 
 .full {
-    grid-column: span 4;
+    grid-column: span 6;
 }
 
 .button {
@@ -192,11 +204,7 @@ label {
 }
 
 #submitInfo {
-    grid-column: 2 / 3;
-}
-
-#downloadBtn {
-    grid-column: 3 / 4;
+    grid-column: 3 / 5;
 }
 
 .disabled {

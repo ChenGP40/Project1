@@ -45,7 +45,7 @@ function triggerNews() {
     window.location.hash = "#newsPage"
 }
 
-window.addEventListener("load", subpageChanger())
+window.addEventListener("load", () => {subpageChanger(); checkForm();})
 function subpageChanger() {
     let hash = window.location.hash;
     if(hash == "") {
@@ -63,22 +63,34 @@ function subpageChanger() {
     }
 }
 
-// Download Validation - CHANGE TO JUST ONE BUTTON
-let downloadBtn = document.getElementById("downloadBtn")
+// Download Validation 
+function checkForm() {
+    let f = document.forms["downloadForm"].elements;
+    let cansubmit = true;
+    const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    document.getElementById('submitInfo').classList.remove("disabled");
 
-document.getElementById("downloadBtn").addEventListener("mouseover", enableBtn())
-function enableBtn() {
+    for (let i = 0; i < f.length; i++) {
+        if (f[i].value.length == 0) {
+            cansubmit = false;
+            document.getElementById('submitInfo').classList.add("disabled");
+        }
+        if (!emailInput.value.match(emailPattern)) {
+            cansubmit = false;
+            document.getElementById('submitInfo').classList.add("disabled");
+          }
 
-}
-
-
-window.addEventListener("load", fileDownloadTrigger())
-function fileDownloadTrigger() {
-    if(blank) {
-        var submitHash = "submitted";
-    } else {
-        var submitHash = ""
     }
+
+    document.getElementById('submitInfo').disabled = !cansubmit;
+    
+    
 }
 
-down.classList.remove("disabled");
+function downloadFile() {
+    const link = document.createElement('a');
+    link.setAttribute('href', 'PCA-PAM50.zip');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+}

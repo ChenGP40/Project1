@@ -96,6 +96,162 @@
         </div>
         <div id="instructions" class="hidden">
             <h2>Instructions</h2>
+
+            <h3>PCA-PAM50 Instructions</h3>
+            <p> Each function calls will make ER balance subset and subsequent PAM50 call:<br>
+                <span class="indent">TEST.ihc and TEST.matrix is provided → subtitute these to make calls for your data.</span><br>
+                <span class="indent">To make conventional intrinsic call that is only using IHC, use the function "makeCalls.ihc".</span><br>
+                <span class="indent">source("functions_PCA-PAM50.R")</span><br> </p>
+
+
+            <p> <b>To form Secondary ER-balanced set (refer to paper) leveraing PCA and subsequent intermediate intrinsic subtype</b><br>
+                This is first step of the PCA-PAM50 approach. </p>
+
+            <p> 1) Load the IHC subtype:</p><hr>
+            <p> We have provided the Test.ihc and matrix file for testing purposes.<br>
+                <span class="indent">load("./Rdat/Sample_IHC_PAM-Mat.Rdat") # [1] "Test.ihc"    "Test.matrix"</span><br> </p>
+
+            <p> 2) Add the ER status for the purpose of sorting:</p><hr>
+            <p> Benefit of sorting → function assumptions are easily met.<br>
+                Assumption is majority of ER+ was on PC1 neg and ER- on the PC1 pos. <br>
+                <span class="indent">Test.ihc$ER_status = rep("NA",length(Test.ihc$PatientID))</span><br>
+                <span class="indent">Test.ihc$ER_status[which(Test.ihc$IHC %in% c("LA","LB1","LB2"))] = "pos"</span><br>
+                <span class="indent">Test.ihc$ER_status[which(Test.ihc$IHC %in% c("TN","Her2+"))] = "neg"</span><br><br>
+
+                <span class="indent">Test.ihc      = Test.ihc[order(Test.ihc$ER_status,decreasing=T),]</span><br>
+                <span class="indent">Test.matrix   = Test.matrix[,Test.ihc$PatientID] ### order test matrix using Test.ihc</span> </p>
+
+            <p> <b>Note</b> <br>
+                Clinical subtype data.frame required for the function should have a column "PatientID" with which mat colnames are also named. <br>
+                IHC subtype column should be named "IHC" <br>
+                IHC subtype are labelled like this "LA", "LB1", "LB2", "TN", "Her2+" <br>
+                df.cln = data.frame(PatientID=Test.ihc$PatientID,IHC=Test.ihc$IHC,stringsAsFactors=F) ### even though Test.ihc has those two columns </p>
+
+            <p> 3) Setting the global variable for PAM50 function to use:</p> <hr>
+            <p> <div class="hangingIndent">paramDir              = "./PAM50/bioclassifier_R/" ### PAM50dir from below function param -- PAM50 provided here-- obtained from https://genome.unc.edu/pubsup/breastGEO/PAM50.zip</div>
+                <div class="hangingIndent">inputDir              = "./Call_wth_PC1ihcMd/" ;dir.create(inputDir) ### warning if directory exists -- safe to ignore warning</div>
+                <div class="hangingIndent">predFiles             = "./Rdat/TEST_pam_mat.txt" ###provided inputFile for predictions----write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)</div>
+                <div class="hangingIndent">short                 = "TEST.PC1ihc.Mdns" # short name that will be used for output files --ANY name is fine </div>
+                <div class="hangingIndent">calibrationParameters = "Mdns.PC1ihc" # used for NM.mdns in function below---suffix for naming int-sbs column in o/p</div>
+                <div class="hangingIndent">hasClinical 	         = FALSE #---we donot use clinical info anyway	</div>
+                <div class="hangingIndent">collapseMethod	     = "mean" # can be mean or iqr (probe with max iqr is selected) ### pertains only to micorarray data	</div>
+                <div class="hangingIndent">Out.mdns.fl           = "mdns_TEST_PC1IHC.txt" #### where new medians will be written---------used for mdns.outFile</div>
+                <div class="hangingIndent">calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") #mdns.outFile below ### DO NOT change this </div> </p>
+
+            <p> 4) Calling function to make secondary ER-balanced set and subsequent intermediate intrinsic subtype: </p><hr>
+            <p> LIST is returned and the elements are: </p>
+            <p> <span class="indent">Int.sbs = Intrinsic subtype</span> <br>
+                <span class="indent">score.fl = PAM50 o/p score</span>  <br>
+                <span class="indent">mdns.fl = medians file</span>  <br>
+                <span class="indent">SBS.colr = PAM50 o/p subtypeColors</span>  <br>
+                <span class="indent">outList = PAM50 o/p outList</span> <br>
+                <span class="indent">PC1cutoff=data frame of Percentage of missclassified cases</span> <br>
+                <span class="indent">DF.PC1 = Provided IHC data frame with PC1 and PC2</span> <br>
+                <span class="indent">sbs.PC1ihcMd = makeCalls.PC1ihc(df.cln, seed=118, mat = Test.matrix, NM.mdns=calibrationParameters, PAM50dir=paramDir, mdns.outFile = Out.mdns.fl) </span> </p>
+
+            <p> save(sbs.PC1ihcMd, file="./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat")
+                addmargins(table(sbs.PC1ihcMd$Int.sbs$IHC, sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc)) → just to check consistency </p>
+
+
+#=============================@@@@@@@@@@@@@@@@@@@@@@@@@@===============================================================
+# compute Tertiary ER-balanced subset (refer paper) using intermediate intrinisc made above
+# Final step of PCA-PAM50 approach -- provides REFINED intrinisc subtype
+#=============================@@@@@@@@@@@@@@@@@@@@@@@@@@===============================================================
+rm(list=ls()) ### remove everything before
+source("functions_PCA-PAM50.R") ####if you run this block separately
+#load the intermediate PAM50 subtype  
+load("./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat") # loads sbs.PC1ihcMd
+#load matrix pam50 norm
+#~ Provided Test.ihc and matrix file for testing purposes 
+load("./Rdat/Sample_IHC_PAM-Mat.Rdat") # [1] "Test.ihc"    "Test.matrix"
+
+
+##### call function---needs a data frame for PAM50 with --PatientID-- and ---PAM50---
+df.pc1pam = data.frame(PatientID=sbs.PC1ihcMd$Int.sbs$PatientID, PAM50=sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc,
+			IHC=sbs.PC1ihcMd$Int.sbs$IHC,  stringsAsFactors=F) ### IHC column is optional 
+
+# setting the global variable for PAM50 function to use
+paramDir              = "./PAM50/bioclassifier_R/" ### PAM50dir from below function param -- PAM50 provided here-- obtained from https://genome.unc.edu/pubsup/breastGEO/PAM50.zip
+inputDir              = "./Call_wth_v1pamMd/" ;dir.create(inputDir) ### warning if dir exists # safe to ignore warning
+predFiles             = "./Rdat/TEST_pam_mat.txt" ###provided inputFile for predictions----write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)
+short                 = "METd.v1pam.Mdns" # short name that will be used for output files ----ANY name is fine  
+calibrationParameters = "Mdns.v1pam" # used for NM.mdns in function below ---suffix for naming int-sbs column in o/p
+hasClinical 	      = FALSE 	#---we donot use clinical info anyway
+collapseMethod	      = "mean" # can be mean or iqr (probe with max iqr is selected)	### pertains only to micorarray data
+Out.mdns.fl           = "mdns_TEST_v1pam.txt" #### where new medians will be written---------used for mdns.outFile
+calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") #mdns.outFile below ### DO NOT change this 
+
+#~~~ calling function to make tertiary ER-balanced set and subsequent refined intrinsic subtype
+#~ LIST is returned and the elements are
+#~ Int.sbs=Intrinsic subtype, score.fl=PAM50 o/p score, mdns.fl=medians file, SBS.colr = PAM50 o/p subtypeColors, outList=PAM50 o/p outList,
+sbs.v1pamMd = makeCalls.v1PAM(df.pam = df.pc1pam, seed=118, mat = Test.matrix, NM.mdns=calibrationParameters, PAM50dir=paramDir, 
+			 mdns.outFile = Out.mdns.fl)
+
+save(sbs.v1pamMd,file="./Rdat/Intrinsic-TESTdata_with_v1pamMedians.Rdat")
+
+addmargins(table(sbs.v1pamMd$Int.sbs$IHC, sbs.v1pamMd$Int.sbs$Int.SBS.Mdns.v1pam)) # to check consitency if optional IHC provided
+
+
+#=============================@@@@@@@@@@@@@@@@@@@@@@@@@@===============================================================
+# To form Primary ER-balanced set (refer to paper) and subsequent conventional intrinsic subtype
+#=============================@@@@@@@@@@@@@@@@@@@@@@@@@@===============================================================
+rm(list=ls()) ### remove everything before
+source("functions_PCA-PAM50.R") 
+
+#load the IHC subtype
+#~ Provided Test.ihc and matrix file for testing purposes 
+load("./Rdat/Sample_IHC_PAM-Mat.Rdat") # [1] "Test.ihc"    "Test.matrix"
+
+
+
+# clinical subtype data.frame required for the function should have a column "PatientID" with which mat colnames are also named.
+# IHC subtype column should be named "IHC"
+# IHC subtype are labelled like this "LA", "LB1", "LB2", "TN", "Her2+"
+df.cln = data.frame(PatientID=Test.ihc$PatientID,IHC=Test.ihc$IHC,stringsAsFactors=F) ### even though Test.ihc has those two columns
+
+
+# setting the global variable for PAM50 function to use
+paramDir              = "./PAM50/bioclassifier_R/" ### PAM50dir from below function param -- PAM50 provided here-- obtained from https://genome.unc.edu/pubsup/breastGEO/PAM50.zip
+inputDir              = "./Call_wth_IHCMd/" ;dir.create(inputDir) ### warning if dir exists # safe to ignore warning
+# the input data matrix as a tab delimited text file
+predFiles             = "./Rdat/TEST_pam_mat.txt" ###provided inputFile for predictions----write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)
+short                 = "IHC.Mdns" # short name that will be used for output files ----ANY name is fine  
+calibrationParameters = "Mdns.ihc" # used for NM.mdns in function below ---suffix for naming int-sbs column in o/p
+hasClinical 	      = FALSE 	#---we donot use clinical info anyway
+collapseMethod	      = "mean" # can be mean or iqr (probe with max iqr is selected)	### pertains only to micorarray data
+Out.mdns.fl           = "mdns_TEST_IHC.txt" #### where new medians will be written---------used for mdns.outFile in function below
+calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") #mdns.outFile below ### DO NOT change this 
+
+#~~~ calling function to make primary ER-balanced set and subsequent conventional intrinsic subtype
+#~ LIST is returned and the elements are
+#~ Int.sbs=Intrinsic subtype, score.fl=PAM50 o/p score, mdns.fl=medians file, SBS.colr = PAM50 o/p subtypeColors, outList=PAM50 o/p outList,
+sbs.IHCmd = makeCalls.ihc(df.cln, seed=118, mat = Test.matrix, NM.mdns=calibrationParameters, PAM50dir=paramDir, 
+			  mdns.outFile = Out.mdns.fl)
+
+save(sbs.IHCmd,file="./Rdat/Intrinsic-TESTdata_with_ihcMedians.Rdat")
+
+addmargins(table(sbs.IHCmd$Int.sbs$Int.SBS.Mdns.ihc, sbs.IHCmd$Int.sbs$IHC)) # to check consitency 
+
+#~~~ 8 % consistency improvement (b/n conventional and refined intrinsic) with this TEST data 
+
+
+###### OPTIONAL code to make PCA PLOT
+
+library(DESeq)
+library(gplots)
+pData = data.frame(condition=Test.ihc$IHC)
+rownames(pData) = Test.ihc$PatientID
+phenoData = new("AnnotatedDataFrame", data=pData)#, varMetadata=Metadata
+XSet      = ExpressionSet(assayData=Test.matrix, phenoData=phenoData)
+my.plotPCA(XSet, intgroup=pData$condition, ablne=2.4,colours = c("hotpink","darkblue","lightblue","lightblue3","red"))
+#### cutoff from function
+
+
+
+            
+            
+            
+            
             <p> The 'bioclassifier_R' folder contains all the functions and fixed parameters. 
                 You should not need to change anything in this folder, but there are some annotation files, the centroids file, 
                 and related information that you may want to be familiar with. </p>
@@ -128,14 +284,13 @@
         <div id="download" class="hidden">
             <h2>Download</h2>
             <p class="center"> To download PCA-PAM50, please enter your full name and email address. </p>
-            <form id="downloadForm">
+            <form id="downloadForm" action="download.php" method="post">
                 <label for="name">Full name:</label>
-                <input type="text" class="textBox" name="firstName" placeholder="First" required>
-                <input type="text" class="textBox" name="lastName" placeholder="Last" required>
+                <input type="text" class="textBox" name="firstName" placeholder="First" required onkeyup="checkForm()">
+                <input type="text" class="textBox" name="lastName" placeholder="Last" required onkeyup="checkForm()">
                 <label for="email">Email address:</label>
-                <input type="email" class="textBox full" name="email" placeholder="johndoe@gmail.com" required>
-                <input type="submit" id="submitInfo" class="button" name="submitInfo" value="Submit">
-                <a id="downloadBtn" class="button disabled" name="downloadBtn" href="PCA-PAM50.zip" download>Download Files</a>
+                <input type="email" id="emailInput" class="textBox full" name="email" placeholder="johndoe@gmail.com" required onkeyup="checkForm()">
+                <input type="submit" id="submitInfo" class="button" name="submitInfo" value="Submit" disabled="" onmousedown="downloadFile()">
             </form>
         </div>
         <div id="news" class="hidden">
