@@ -1,5 +1,6 @@
+/* Reset and Debugging */
 * {
-    /* outline: solid red 1px; */
+    outline: solid red 1px;
     margin: 0;
     padding: 0;
 }
@@ -34,11 +35,6 @@ li {
 
 hr {
     max-width: 50%;
-}
-
-section {
-    max-width: 61%;
-    margin: 0 auto;
 }
 
 h1 {
@@ -108,21 +104,41 @@ h3 {
 }
 
 /* Main */
-.toolInfo {
+.boxLayout {
+    max-width: 65%;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4.5em;
-    margin-top: 4.5em;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: minmax(50px 100px);
+    gap: 4em;
+    margin-top: 2em;
+}
+
+.box {
+    grid-column: span 1;
+    aspect-ratio: 1 / 1;
+
+}
+
+.boxImg {
+    object-fit: fill;
+    z-index: 1;
+    width: 500px;
+    height: min-content;
+}
+
+.boxImgText {
+    z-index: 2;
+}
+
+.descriptionText {
+    z-index: 2;
 }
 
 /* Side Nav */
 .sideContainer {
     grid-column: 1 / 2;
 }
-
-/* .sideNav {
-
-} */
 
 .sideNavLinks {
     font-size: 17px;
@@ -135,6 +151,15 @@ h3 {
 }
 
 /* Info */
+.toolInfo {
+    max-width: 61%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4.5em;
+    margin-top: 4.5em;
+}
+
 .info {
     grid-column: 2 / 5;
     margin-bottom: 4em;
