@@ -79,12 +79,8 @@ function checkForm() {
             cansubmit = false;
             document.getElementById('submitInfo').classList.add("disabled");
           }
-
     }
-
     document.getElementById('submitInfo').disabled = !cansubmit;
-    
-    
 }
 
 function downloadFile() {
