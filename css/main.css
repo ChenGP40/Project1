@@ -3,6 +3,7 @@
     /* outline: solid red 1px; */
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 /* Text Types */
@@ -105,35 +106,82 @@ h3 {
 
 /* Main */
 .boxLayout {
-    max-width: 65%;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: minmax(50px 100px);
-    gap: 4em;
-    margin-top: 2em;
+    max-width: 85%;
+    margin: 0 auto;
 }
 
 .box {
-    grid-column: span 1;
+    position: relative;
+    margin: 3em auto;
+    padding: 0;
+    width: 20vw;
+    height: auto;
     aspect-ratio: 1 / 1;
-
+    justify-self: center;
+    text-align: center;
+    cursor: pointer;
 }
 
 .boxImg {
-    object-fit: fill;
-    z-index: 1;
-    width: 500px;
-    height: min-content;
+    width:100%; 
+    height:100%;
+    object-fit: cover;
+    transition: transform 0.5s, opacity 0.5s;
 }
 
 .boxImgText {
+    background-color: #f4f7fa;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: fit-content;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s, opacity 0.5s;
     z-index: 2;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 1em 0;
+
+}
+
+.gradientOverlay {
+    background: linear-gradient(rgb(90, 179, 252), blue);
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: transform 0.5s, opacity 0.5s;
 }
 
 .descriptionText {
-    z-index: 2;
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+    z-index: 1;
+    text-align: left;
+    padding: 1.5em;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
 }
+
+.box:hover > .descriptionText {
+    opacity: 1;
+    outline: 3px solid black;
+}
+
+.box:hover > .boxImg, .box:hover > .boxImgText {
+    opacity: 0;
+}
+
 
 /* Side Nav */
 .sideContainer {

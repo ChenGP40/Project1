@@ -83,9 +83,9 @@ function checkForm() {
     document.getElementById('submitInfo').disabled = !cansubmit;
 }
 
-function downloadFile() {
+function toPCA_PAM50() {
     const link = document.createElement('a');
-    link.setAttribute('href', 'PCA-PAM50.zip');
+    link.setAttribute('href', 'pca-pam50.html');
     document.body.appendChild(link);
     link.click();
     link.remove();
