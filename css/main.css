@@ -226,7 +226,7 @@ label {
     text-align: center;
 }
 
-.button:hover {
+.button:hover, .downloadBtn:hover {
     background-color: white;
     color: black;
     transition: .3s;
