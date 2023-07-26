@@ -18,7 +18,7 @@
 <header>
 <nav>
     <div class="container">
-        <a href="index.html" class="navbarHeader" title="Home">Tools Portal</a>
+        <a href="../index.html" class="navbarHeader" title="Home">Tools Portal</a>
         <ul class="navigation">
             <li>Available Tools:</li>
             <li class="selected">PCA-PAM50</li>
@@ -43,7 +43,7 @@
         <div id="download">
             <h2>Download</h2>
             <p class='center'> Thank you for downloading PCA-PAM50! </p>
-            <a href="../PCA-PAM50.zip" class="button downloadBtn" download>Download Files</a>
+            <a href="../PCA-PAM50.zip" class="downloadBtn" download>Download Files</a>
         </div>
     </div>
 </section>

@@ -236,13 +236,22 @@ label {
     grid-column: 3 / 5;
 }
 
+.disabled {
+    pointer-events: none;
+    opacity: .2;
+}
+
 .downloadBtn {
     display: block;
     margin: 1em auto;
     max-width: 10em;
-}
-
-.disabled {
-    pointer-events: none;
-    opacity: .2;
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: .5em;
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    text-align: center;
 }
