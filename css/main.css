@@ -1,6 +1,6 @@
 /* Reset and Debugging */
 * {
-    outline: solid red 1px;
+    /* outline: solid red 1px; */
     margin: 0;
     padding: 0;
 }
@@ -234,6 +234,12 @@ label {
 
 #submitInfo {
     grid-column: 3 / 5;
+}
+
+.downloadBtn {
+    display: block;
+    margin: 1em auto;
+    max-width: 10em;
 }
 
 .disabled {

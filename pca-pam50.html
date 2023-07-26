@@ -306,13 +306,13 @@
         <div id="download" class="hidden">
             <h2>Download</h2>
             <p class="center"> To download PCA-PAM50, please enter your full name and email address. </p>
-            <form id="downloadForm" action="index.html" method="post">
+            <form id="downloadForm" action="php/downloadInc.php" method="post">
                 <label for="name">Full name:</label>
                 <input type="text" class="textBox" name="firstName" placeholder="First" required onkeyup="checkForm()">
                 <input type="text" class="textBox" name="lastName" placeholder="Last" required onkeyup="checkForm()">
                 <label for="email">Email address:</label>
                 <input type="email" id="emailInput" class="textBox full" name="email" placeholder="johndoe@gmail.com" required onkeyup="checkForm()">
-                <input type="submit" id="submitInfo" class="button" name="submitInfo" value="Submit" disabled="" onmousedown="downloadFile()">
+                <input type="submit" id="submitInfo" class="button" name="submitInfo" value="Submit" disabled="">
             </form>
         </div>
         <div id="news" class="hidden">

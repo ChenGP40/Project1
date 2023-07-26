@@ -11,6 +11,6 @@ function createUser($conn, $fName, $lName, $email) {
         mysqli_stmt_bind_param($stmt, "sss", $fName, $lName, $email);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        header("location: ../download.php");
+        header("location: download.php");
         exit();
     }

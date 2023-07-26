@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["submitInfo"])) {
 
     $fName = $_POST["firstName"];
     $lName = $_POST["lastName"];
@@ -10,6 +10,8 @@ if (isset($_POST["submit"])) {
     require_once 'functionsInc.php';
 
     createUser($conn, $fName, $lName, $email);
+    
+    require_once 'download.php';
 }
 
 else {
