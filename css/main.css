@@ -107,7 +107,7 @@ h3 {
 /* Main */
 .boxLayout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     max-width: 85%;
     margin: 0 auto;
 }
@@ -217,13 +217,35 @@ h3 {
     padding-left: 2em;
 }
 
-/* .hangingIndent {
-    text-indent: -2em;
-    padding-left: 2em;
-    font-size: 17px;
-    text-align: left;
+.codeBlock {
+    display: block;
+    padding: .5em;
+    margin-top: .5em;
+    font-size: 14px;
     line-height: 1.75;
-} */
+    color: #333;
+    /* white-space: pre-wrap; */
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow-x: scroll;
+}
+
+.g {
+    color: #007020;
+    font-weight: bold;
+}
+
+.str {
+    color: #4070a0;
+}
+
+.comment {
+    color: #60a0b0;
+    font-style: italic;
+}
 
 .extraPadding {
     padding-top: 2em;

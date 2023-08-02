@@ -1,11 +1,13 @@
 // Changing between subpages (side navigation)
-const desc = document.getElementById("description");
-const inst = document.getElementById("instructions");
-const faq = document.getElementById("faq");
-const down = document.getElementById("download");
-const news = document.getElementById("news");
+const desc = document.getElementById("descriptionPage");
+const inst = document.getElementById("instructionsPage");
+const instSubpage = document.getElementById("instructionsPageSubpage");
+const instSubpageTwo = document.getElementById("instructionsPageSubpageTwo");
+const faq = document.getElementById("faqPage");
+const down = document.getElementById("downloadPage");
+const news = document.getElementById("newsPage");
 
-let allClasses = [desc, inst, faq, down, news];
+let allClasses = [desc, inst, instSubpage, instSubpageTwo, faq, down, news];
 
 var submitHash = ""
 
@@ -18,31 +20,45 @@ allClasses.forEach(function(el) {
 document.getElementById("descriptionTrigger").addEventListener("click", () => {hideAll(); triggerDescription();})
 function triggerDescription() {
     desc.classList.remove("hidden");
-    window.location.hash = "#descriptionPage"
+    window.location.hash = "#description"
 }
 
 document.getElementById("instructionsTrigger").addEventListener("click", () => {hideAll(); triggerInstructions();})
 function triggerInstructions() {
     inst.classList.remove("hidden");
-    window.location.hash = "#instructionsPage"
+    instSubpage.classList.remove("hidden");
+    instSubpageTwo.classList.remove("hidden");
+    window.location.hash = "#instructions"
+}
+document.getElementById("instructionsTriggerSubpage").addEventListener("click", () => {hideAll(); triggerInstructionsSubpage();})
+function triggerInstructionsSubpage() {
+    inst.classList.remove("hidden");
+    instSubpage.classList.remove("hidden");
+    window.location.hash = "#instructionsSubpage"
+}
+document.getElementById("instructionsTriggerSubpageTwo").addEventListener("click", () => {hideAll(); triggerInstructionsSubpageTwo();})
+function triggerInstructionsSubpageTwo() {
+    inst.classList.remove("hidden");
+    instSubpageTwo.classList.remove("hidden");
+    window.location.hash = "#instructionsSubpageTwo"
 }
 
 document.getElementById("faqTrigger").addEventListener("click", () => {hideAll(); triggerFaq();})
 function triggerFaq() {
     faq.classList.remove("hidden");
-    window.location.hash = "#faqPage"
+    window.location.hash = "#faq"
 }
 
 document.getElementById("downloadTrigger").addEventListener("click", () => {hideAll(); triggerDownload();})
 function triggerDownload() {
     down.classList.remove("hidden");
-    window.location.hash = "#downloadPage"
+    window.location.hash = "#download"
 }
 
 document.getElementById("newsTrigger").addEventListener("click", () => {hideAll(); triggerNews();})
 function triggerNews() {
     news.classList.remove("hidden");
-    window.location.hash = "#newsPage"
+    window.location.hash = "#news"
 }
 
 window.addEventListener("load", () => {subpageChanger(); checkForm();})
@@ -50,13 +66,17 @@ function subpageChanger() {
     let hash = window.location.hash;
     if(hash == "") {
         triggerDescription();
-    } else if(hash == "#descriptionPage") {
+    } else if(hash == "#description") {
         triggerDescription();
-    } else if(hash == "#instructionsPage") {
+    } else if(hash == "#instructions") {
         triggerInstructions();
-    } else if(hash == "#faqPage") {
+    } else if(hash == "#instructionsSubpage") {
+        triggerInstructionsSubpage();
+    } else if(hash == "#instructionsSubpageTwo") {
+        triggerInstructionsSubpageTwo();
+    } else if(hash == "#faq") {
         triggerFaq();
-    } else if(hash == "#downloadPage") {
+    } else if(hash == "#download") {
         triggerDownload();
     } else {
         triggerNews();
