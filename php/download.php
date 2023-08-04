@@ -34,6 +34,8 @@
         <ul class="sideNav">
             <li class="sideNavLinks"><a href="../pca-pam50.html#descriptionPage">What is PCA-PAM50?</a></li>
             <li class="sideNavLinks"><a href="../pca-pam50.html#instructionsPage">Instructions</a></li>
+                <li class="sideNavLinks indent"><a href="../pca-pam50.html#instructionsSubpage">PCA-PAM50 Instructions</a></li>
+                <li class="sideNavLinks indent"><a href="../pca-pam50.html#instructionsSubpageTwo">Bioclassifier Instructions</a></li>
             <li class="sideNavLinks"><a href="../pca-pam50.html#faqPage">Frequently Asked Questions</a></li>
             <li class="sideNavLinks"><a href="../pca-pam50.html#downloadPage">Download</a></li>
             <li class="sideNavLinks"><a href="../pca-pam50.html#newsPage">News and Updates</a></li>
