@@ -52,14 +52,15 @@
             
             <p> Input is just the normalized PAM50 gene expression matrix. </p>
 
-            <p> The package contains two R scripts:<br> 
-                <span class="indent">PCA-PAM50.R             → makes use of two functions to make median values and subsequent PAM50 calls.</span><br>
-                <span class="indent">functions_PCA-PAM50.R   → provides necessary functions.</span><br> </p>
-
+            <p> The package contains two R scripts:</p>
+<pre class="descriptionBlock">
+PCA-PAM50.R                     → makes use of two functions to make median values and subsequent PAM50 calls.
+functions_PCA-PAM50.R   → provides necessary functions.
+</pre> 
             <p> The package comes with a sample/TEST PAM50 matrix to demonstrate running the program:<br>
-                <span class="indent">'TEST.ihc' and 'TEST.matrix' is provided → substitute these to make calls for your data.</span><br>
-                <span class="indent">To make conventional intrinsic calls that are only using IHC, use the function "makeCalls.ihc".</span><br>
-                <span class="indent">Refer to 'PCA-PAM50.R' to learn more.</span><br> </p>
+                'TEST.ihc' and 'TEST.matrix' is provided, substitute these to make calls for your data.<br>
+                To make conventional intrinsic calls that are only using IHC, use the function "makeCalls.ihc".</p>
+            <p> Refer to 'PCA-PAM50.R' to learn more, or click <a href="#" onclick="hideAll(); triggerInstructions(); return false;" title="Link to instructions page">here.</a></p>
 
                 <h3>Prerequisites</h3>
 
@@ -68,26 +69,28 @@
                 However it has only been tested on Linux/Ubuntu. </p>
 
             <p> <b>Software</b><br>
-                Required libraries:<br>
-                <span class="indent">gplots</span><br>
-                <span class="indent">RColorBrewer</span><br>
-                <span class="indent">lattice</span><br>
-                <span class="indent">genefilter</span><br>
-                <span class="indent">ctc</span><br>
-                <span class="indent">heatmap.plus</span> </p>
-
-            <p> Libraries can be installed through R Bioconductor like this:<br>
-                <div class="codeBlock">
-                    Source("https://bioconductor.org/biocLite.R")<br>
-                 BiocLite(<library>) </div></p>
+                Required libraries: </p>
+<pre class="codeBlock">
+gplots
+RColorBrewer
+lattice
+genefilter
+ctc
+heatmap.plus
+</pre>
+            <p> Libraries can be installed through R Bioconductor like this:</p>
+<pre class="codeBlock">
+<span class="kw">source</span>(<span class="str">"https://bioconductor.org/biocLite.R"</span>)
+<span class="kw">BiocLite</span>(library)
+</pre>
 
                 <h3>COPYRIGHT AND LICENSE</h3>
                 
             <p> Copyright 2018 Windber Reseach Institute, Windber, PA - 15963. All Rights Reserved. </p>
             
             <p> Contact:<br>
-                <span class="indent">Developer: Praveen K. Raj Kumar [P.RajKumar@wriwindber.org]</span><br>
-                <span class="indent">Lab director: Hai Hu [H.hu@wriwindber.org]</span><br> </p>
+                Developer: Praveen K. Raj Kumar [P.RajKumar@wriwindber.org]<br>
+                Lab director: Hai Hu [H.hu@wriwindber.org] </p>
 
             <p> This program is free software: you can redistribute it and/or modify it under
                 the terms of the GNU General Public License as published by the Free Software
@@ -101,10 +104,10 @@
             <h2>Instructions</h2>
         <div id="instructionsPageSubpage" class="hidden">
             <h3>PCA-PAM50 Instructions</h3>
-            <p> Each function calls will make ER balance subset and subsequent PAM50 call:<br>
-                <span class="indent">TEST.ihc and TEST.matrix is provided → substitute these to make calls for your data.</span><br>
-                <span class="indent">To make conventional intrinsic call that is only using IHC, use the function "makeCalls.ihc".</span><br>
-                <span class="indent">source("functions_PCA-PAM50.R")</span><br> </p>
+            <p> Each function calls will make ER balance subset and subsequent PAM50 call.<br>
+                TEST.ihc and TEST.matrix are provided → substitute these to make calls for your data.<br>
+                To make conventional intrinsic call that is only using IHC, use the function "makeCalls.ihc".</p>
+<pre class="codeBlock"><span class="kw">source</span>(<span class="str">"functions_PCA-PAM50.R"</span>)</pre>
 <!-------------------------------------------------------------------------------------------------------------->            
             <p class="extraPadding"> <b>Form Secondary ER-balanced set (refer to paper) leveraging PCA and subsequent intermediate intrinsic subtype</b><br>
                 This is first step of the PCA-PAM50 approach. </p>
@@ -112,130 +115,131 @@
             <p> 1) Load the IHC subtype:</p><hr>
             <p> We have provided the Test.ihc and matrix file for testing purposes.<br>
 <pre class="codeBlock">
-<span class="g">load</span>(<span class="str">"./Rdat/Sample_IHC_PAM-Mat.Rdat"</span>) <span class="comment"># [1] "Test.ihc"    "Test.matrix"</span>
+<span class="kw">load</span>(<span class="str">"./Rdat/Sample_IHC_PAM-Mat.Rdat"</span>) <span class="comment"># [1] "Test.ihc"    "Test.matrix"</span>
 </pre>
 
             <p class="extraPadding"> 2) Add the ER status for the purpose of sorting:</p><hr>
             <p> Benefit of sorting → function assumptions are easily met.<br>
                 Assumption is majority of ER+ was on PC1 neg and ER- on the PC1 pos. <br>
 <pre class="codeBlock">
-Test.ihc$ER_status = <span class="g">rep</span>(<span class="str">"NA"</span>,(<span class="str">length</span>(Test.ihc$PatientID))
-Test.ihc$ER_status[which(Test.ihc$IHC %in% c("LA","LB1","LB2"))] = "pos"
-Test.ihc$ER_status[which(Test.ihc$IHC %in% c("TN","Her2+"))] = "neg"
+Test.ihc$ER_status = <span class="kw">rep</span>(<span class="str">"NA"</span>,(<span class="kw">length</span>(Test.ihc$PatientID))
+Test.ihc$ER_status[<span class="kw">which</span>(Test.ihc$IHC %in% c("LA","LB1","LB2"))] = <span class="str">"pos"</span>
+Test.ihc$ER_status[<span class="kw">which</span>(Test.ihc$IHC %in% c("TN","Her2+"))] = <span class="str">"neg"</span>
 
-Test.ihc      = Test.ihc[order(Test.ihc$ER_status,decreasing=T),]
-Test.matrix   = Test.matrix[,Test.ihc$PatientID] ### order test matrix using Test.ihc
+Test.ihc      = Test.ihc[<span class="kw">order</span>(Test.ihc$ER_status, <span class="dt">decreasing =</span> T),]
+Test.matrix   = Test.matrix[,Test.ihc$PatientID] <span class="comment"># Order test matrix using Test.ihc</span>
 </pre>
 
             <p> <b>Note</b> <br>
                 Clinical subtype data.frame required for the function should have a column "PatientID" with which mat colnames are also named. <br>
                 IHC subtype column should be named "IHC" <br>
                 IHC subtype are labelled like this "LA", "LB1", "LB2", "TN", "Her2+" <br>
-                df.cln = data.frame(PatientID=Test.ihc$PatientID,IHC=Test.ihc$IHC,stringsAsFactors=F) → even though Test.ihc has those two columns </p>
+<pre class="codeBlock">df.cln = <span class="kw">data.frame</span>(<span class="dt">PatientID =</span> Test.ihc$PatientID, <span class="dt">IHC =</span> Test.ihc$IHC, <span class="dt">stringsAsFactors =</span> F) <span class="comment"># Even though Test.ihc has those two columns.</span></pre>
 
             <p class="extraPadding"> 3) Setting the global variable for PAM50 function to use:</p> <hr>
 <pre class="codeBlock">
-
-inputDir              = "./Call_wth_PC1ihcMd/" ;dir.create(inputDir) <span class="comment">#Warning if directory exists.</span>
-                    <span class="indent">*It is safe to ignore the warning
-predFiles             = "./Rdat/TEST_pam_mat.txt" → Provided inputFile for predictions. 
-                    <span class="indent">write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)
-short                 = "TEST.PC1ihc.Mdns" → short name that will be used for output files.
-                    <span class="indent">*ANY name is fine
-calibrationParameters = "Mdns.PC1ihc" → used for NM.mdns in function below, suffix for naming int-sbs column in o/p.
-hasClinical 	      = FALSE → We do not use clinical info anyways.
-collapseMethod	      = "mean" → Can be mean or iqr (probe with max iqr is selected).
-                    <span class="indent">*Pertains only to micorarray data
-Out.mdns.fl           = "mdns_TEST_PC1IHC.txt" → Where new medians will be written 
-                    <span class="indent">*Used for mdns.outFile
-calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") → mdns.outFile below
-                    <span class="indent">***DO NOT change this
-
-
-paramDir              = "./PAM50/bioclassifier_R/" <span class="comment">### PAM50dir from below function param -- PAM50 is provided here</span>
-                        <span class="comment">Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>.# Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>.</span>
-inputDir              = "./Call_wth_PC1ihcMd/" ;<span class="g">dir.create</span>(inputDir) <span class="comment">### Warning if directory exists -- It is safe to ignore the warning.</span>
-predFiles             = "./Rdat/TEST_pam_mat.txt" ###provided inputFile for predictions----write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)
-short                 = "TEST.PC1ihc.Mdns" # short name that will be used for output files --ANY name is fine 
-calibrationParameters = "Mdns.PC1ihc" # used for NM.mdns in function below---suffix for naming int-sbs column in o/p
-hasClinical 	      = FALSE #---we donot use clinical info anyway	
-collapseMethod	      = "mean" # can be mean or iqr (probe with max iqr is selected) ### pertains only to micorarray data	
-Out.mdns.fl           = "mdns_TEST_PC1IHC.txt" #### where new medians will be written---------used for mdns.outFile
-calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") #mdns.outFile below ### DO NOT change this 
+paramDir              = "./PAM50/bioclassifier_R/" <span class="comment"># PAM50dir from below function param -- PAM50 is provided here.</span>
+                        <span class="comment"># Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank">https://genome-publications.bioinf.unc.edu/PAM50/</a>.</span>
+                        <span class="comment"># *For more information and detailed instructions, please read the Bioclassifier section.</span>
+inputDir              = "./Call_wth_PC1ihcMd/" ;<span class="kw">dir.create</span>(inputDir) <span class="comment"># Warning if directory exists.</span>
+                        <span class="comment"># *It is safe to ignore the warning.</span>
+predFiles             = "./Rdat/TEST_pam_mat.txt" <span class="comment"># Provided inputFile for predictions.</span>
+                        <span class="comment"># write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA)</span>
+short                 = "TEST.PC1ihc.Mdns" <span class="comment"># Short name that will be used for output files -- ANY name is fine.</span>
+calibrationParameters = "Mdns.PC1ihc" <span class="comment"># Used for NM.mdns in function below -- Suffix for naming int-sbs column in o/p.</span>
+hasClinical 	      = FALSE <span class="comment"># We do not use clinical info anyways. </span>
+collapseMethod	      = "mean" <span class="comment"># Can be mean or iqr (probe with max iqr is selected).</span>
+                        <span class="comment"># *Pertains only to micorarray data.</span>
+Out.mdns.fl           = "mdns_TEST_PC1IHC.txt" <span class="comment"># Where new medians will be written -- Used for mdns.outFile</span>
+calibrationFile       = <span class="kw">paste</span>(paramDir, Out.mdns.fl, <span class="dt">sep = </span><span class="str">"/"</span>) <span class="comment"># mdns.outFile below -- *DO NOT change this*</span> 
 </pre>
             <p class="extraPadding"> 4) Calling function to make secondary ER-balanced set and subsequent intermediate intrinsic subtype: </p><hr>
-            <p> LIST is returned and the elements are: <br>
-                <span class="indent">Int.sbs = Intrinsic subtype</span> <br>
-                <span class="indent">score.fl = PAM50 o/p score</span>  <br>
-                <span class="indent">mdns.fl = medians file</span>  <br>
-                <span class="indent">SBS.colr = PAM50 o/p subtypeColors</span>  <br>
-                <span class="indent">outList = PAM50 o/p outList</span> <br>
-                <span class="indent">PC1cutoff=data frame of Percentage of missclassified cases</span> <br>
-                <span class="indent">DF.PC1 = Provided IHC data frame with PC1 and PC2</span> <br>
-                <span class="indent">sbs.PC1ihcMd = makeCalls.PC1ihc(df.cln, seed=118, mat = Test.matrix, NM.mdns=calibrationParameters, PAM50dir=paramDir, mdns.outFile = Out.mdns.fl) </span> </p>
+            <p> LIST is returned and the elements are:
+<pre class="codeBlock">
+<span class="comment"># Int.sbs = Intrinsic subtype
+# score.fl = PAM50 o/p score
+# mdns.fl = medians file
+# SBS.colr = PAM50 o/p subtypeColors
+# outList = PAM50 o/p outList
+# PC1cutoff = data frame of Percentage of missclassified cases
+# DF.PC1 = Provided IHC data frame with PC1 and PC2</span>
 
-            <p> save(sbs.PC1ihcMd, file="./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat")
-                addmargins(table(sbs.PC1ihcMd$Int.sbs$IHC, sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc)) → just to check consistency </p>
+sbs.PC1ihcMd = <span class="kw">makeCalls.PC1ihc</span>(df.cln, <span class="dt">seed =</span> 118, <span class="dt">mat =</span> Test.matrix, <span class="dt">NM.mdns =</span> calibrationParameters, <span class="dt">PAM50dir =</span> paramDir, <span class="dt">mdns.outFile =</span> Out.mdns.fl)
+</pre>
+<pre class="codeBlock">
+<span class="kw">save</span>(sbs.PC1ihcMd, <span class="dt">file =</span> <span class="str">"./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat"</span>)
+<span class="kw">addmargins</span>(<span class="kw">table</span>(sbs.PC1ihcMd$Int.sbs$IHC, sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc)) <span class="comment"># Just to check consistency.</span>
+</pre>
  <!-------------------------------------------------------------------------------------------------------------->          
             <p class="extraPadding"> <b>Compute Tertiary ER-balanced Subset (refer to paper) using intermediate intrinisc made above</b><br>
                 The final step of PCA-PAM50 approach → provides REFINED intrinisc subtype. </p>
-
-            <p> rm(list=ls()) → remove everything from before <br>
-                source("functions_PCA-PAM50.R") → if you run this block separately </p>
-            <p> load the intermediate PAM50 subtype <br>
-                load("./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat") → loads sbs.PC1ihcMd <br>
-                load matrix pam50 norm </p>
-            <p> Provided Test.ihc and matrix file for testing purposes: <br>
-                <span class="indent">load("./Rdat/Sample_IHC_PAM-Mat.Rdat") → [1] "Test.ihc"    "Test.matrix"</span></p>
-
-
+<pre class="codeBlock">
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="comment"># Remove everything from before.</span>
+<span class="kw">source</span>(<span class="str">"functions_PCA-PAM50.R"</span>) <span class="comment"># If you run this block separately.</span>
+</pre>
+<p>Load the following: </p>
+<pre class="codeBlock">
+# Load the intermediate PAM50 subtype.
+<span class="kw">load</span>(<span class="str">"./Rdat/Intrinsic-TESTdata_with_PC1ihcMedians.Rdat"</span>) <span class="comment"># Loads sbs.PC1ihcMd</span>
+# Load matrix pam50 norm.
+</pre>
+<p>Provided Test.ihc and matrix file for testing purposes: </p>
+<pre class="codeBlock">
+<span class="kw">load</span>(<span class="str">"./Rdat/Sample_IHC_PAM-Mat.Rdat"</span>) <span class="comment"># [1] "Test.ihc"    "Test.matrix"</span>
+</pre>
             <p class="extraPadding"> 1) Call function - needs a data frame for PAM50 with --PatientID-- and ---PAM50--- </p> <hr>
-            <p> df.pc1pam = data.frame(PatientID=sbs.PC1ihcMd$Int.sbs$PatientID, PAM50 = sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc,
-			IHC = sbs.PC1ihcMd$Int.sbs$IHC, stringsAsFactors=F) </p>
+<pre class="codeBlock">
+df.pc1pam = <span class="kw">data.frame</span>(<span class="dt">PatientID =</span> sbs.PC1ihcMd$Int.sbs$PatientID, <span class="dt">PAM50 =</span> sbs.PC1ihcMd$Int.sbs$Int.SBS.Mdns.PC1ihc, <span class="dt">IHC =</span> sbs.PC1ihcMd$Int.sbs$IHC, <span class="dt">stringsAsFactors =</span> F)
+</pre>
             <p> <b>Note</b> <br>
                 The IHC column is optional. </p>
 
             <p class="extraPadding"> 2) Setting the global variable for PAM50 function to use </p> <hr>
-                <p> paramDir              = "./PAM50/bioclassifier_R/" → PAM50dir from below function param, PAM50 is provided here. <br>
-                    Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>. <br>
-                    <span class="indent">*For more information and detailed instructions, please scroll down to the Bioclassifier section</span> </p>
-                <p> inputDir              = "./Call_wth_v1pamMd/" ;dir.create(inputDir) → Warning if directory exists. <br>
-                    <span class="indent">*It is safe to ignore the warning </span> </p>
-                <p> predFiles             = "./Rdat/TEST_pam_mat.txt" → Provided inputFile for predictions. <br>
-                    <span class="indent">write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA) </span> </p>
-                <p> short                 = "METd.v1pam.Mdns" → short name that will be used for output files. <br>
-                    <span class="indent">*ANY name is fine </span> </p>
-                <p> calibrationParameters = "Mdns.v1pam" → used for NM.mdns in function below, suffix for naming int-sbs column in o/p. </p>
-                <p> hasClinical 	      = FALSE → We do not use clinical info anyways. </p>
-                <p> collapseMethod	      = "mean" → Can be mean or iqr (probe with max iqr is selected). <br>
-                    <span class="indent">*Pertains only to micorarray data</span> </p>
-                <p> Out.mdns.fl           = "mdns_TEST_v1pam.txt" → Where new medians will be written <br>
-                    <span class="indent">*Used for mdns.outFile </span> </p>
-                <p> calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") → mdns.outFile below <br>
-                    <span class="indent">***DO NOT change this </span></p>
-
+<pre class="codeBlock">
+paramDir              = "./PAM50/bioclassifier_R/" <span class="comment"># PAM50dir from below function param -- PAM50 is provided here.</span>
+                        <span class="comment"># Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>.</span>
+                        <span class="comment"># *For more information and detailed instructions, please read the Bioclassifier section.</span>
+inputDir              = "./Call_wth_v1pamMd/" ;<span class="kw">dir.create</span>(inputDir) <span class="comment"># Warning if directory exists.</span>
+                        <span class="comment"># *It is safe to ignore the warning.</span>
+predFiles             = "./Rdat/TEST_pam_mat.txt" <span class="comment"># Provided inputFile for predictions.</span>
+                        <span class="comment"># write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep = "\t", col.name = NA)</span>
+short                 = "METd.v1pam.Mdns" <span class="comment"># Short name that will be used for output files -- ANY name is fine.</span>
+calibrationParameters = "Mdns.v1pam" <span class="comment"># Used for NM.mdns in function below -- Suffix for naming int-sbs column in o/p.</span>
+hasClinical 	      = FALSE <span class="comment"># We do not use clinical info anyways. </span>
+collapseMethod	      = "mean" <span class="comment"># Can be mean or iqr (probe with max iqr is selected).</span>
+                        <span class="comment"># *Pertains only to micorarray data.</span>
+Out.mdns.fl           = "mdns_TEST_v1pam.txt" <span class="comment"># Where new medians will be written -- Used for mdns.outFile</span>
+calibrationFile       = <span class="kw">paste</span>(paramDir, Out.mdns.fl, <span class="dt">sep = </span><span class="str">"/"</span>) <span class="comment"># mdns.outFile below -- *DO NOT change this*</span> 
+</pre>
             <p class="extraPadding"> 3) Calling function to make tertiary ER-balanced set and subsequent refined intrinsic subtype </p> <hr>
             <p> LIST is returned and the elements are: <br>
-                <span class="indent">Int.sbs = Intrinsic subtype</span> <br>
-                <span class="indent">score.fl = PAM50 o/p score</span>  <br>
-                <span class="indent">mdns.fl = medians file</span>  <br>
-                <span class="indent">SBS.colr = PAM50 o/p subtypeColors</span>  <br>
-                <span class="indent">outList = PAM50 o/p outList</span> <br>
-                <span class="indent">sbs.v1pamMd = makeCalls.v1PAM(df.pam = df.pc1pam, seed=118, mat = Test.matrix, NM.mdns = calibrationParameters, PAM50dir=paramDir, 
-                    mdns.outFile = Out.mdns.fl) </span> </p>
-                
-            <p> save(sbs.v1pamMd,file="./Rdat/Intrinsic-TESTdata_with_v1pamMedians.Rdat")
-                addmargins(table(sbs.v1pamMd$Int.sbs$IHC, sbs.v1pamMd$Int.sbs$Int.SBS.Mdns.v1pam)) → to check consitency if optional IHC provided </p>
+<pre class="codeBlock">
+<span class="comment"># Int.sbs = Intrinsic subtype
+# score.fl = PAM50 o/p score
+# mdns.fl = medians file
+# SBS.colr = PAM50 o/p subtypeColors
+# outList = PAM50 o/p outList</span>
+
+sbs.v1pamMd = <span class="kw">makeCalls.v1PAM</span>(<span class="dt">df.pam =</span> df.pc1pam, <span class="dt">seed =</span> 118, <span class="dt">mat =</span> Test.matrix, <span class="dt">NM.mdns =</span> calibrationParameters, <span class="dt">PAM50dir =</span> paramDir, <span class="dt">mdns.outFile =</span> Out.mdns.fl)
+</pre>
+<pre class="codeBlock">
+<span class="kw">save</span>(sbs.v1pamMd, <span class="dt">file =</span> <span class="str">"./Rdat/Intrinsic-TESTdata_with_v1pamMedians.Rdat"</span>)
+<span class="kw">addmargins</span>(<span class="kw">table</span>(sbs.v1pamMd$Int.sbs$IHC, sbs.v1pamMd$Int.sbs$Int.SBS.Mdns.v1pam)) <span class="comment"># To check consistency if optional IHC provided.</span>
+</pre>
 <!-------------------------------------------------------------------------------------------------------------->
             <p class="extraPadding"> <b>To form Primary ER-balanced set (refer to paper) and subsequent conventional intrinsic subtype</b> </p>
-            
-            <p> rm(list=ls()) → remove everything from before <br>
-                source("functions_PCA-PAM50.R") → if you run this block separately </p>
-            <p> load the IHC subtype </p>
-
-            <p> Provided Test.ihc and matrix file for testing purposes: <br>
-                <span class="indent">load("./Rdat/Sample_IHC_PAM-Mat.Rdat") → [1] "Test.ihc"    "Test.matrix"</span></p>
-    
+<pre class="codeBlock">
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="comment"># Remove everything from before.</span>
+<span class="kw">source</span>(<span class="str">"functions_PCA-PAM50.R"</span>) <span class="comment"># If you run this block separately.</span>
+</pre>
+<p>Load the following: </p>
+<pre class="codeBlock">
+# Load the IHC subtype.
+</pre>
+<p>Provided Test.ihc and matrix file for testing purposes: </p>
+<pre class="codeBlock">
+<span class="kw">load</span>(<span class="str">"./Rdat/Sample_IHC_PAM-Mat.Rdat"</span>) <span class="comment"># [1] "Test.ihc"    "Test.matrix"</span>
+</pre>
             <p> <b>Note</b> <br>
                 Clinical subtype data.frame required for the function should have a column "PatientID" with which mat colnames are also named. <br>
                 IHC subtype column should be named "IHC" <br>
@@ -243,50 +247,54 @@ calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") #mdns.outFile below 
                 df.cln = data.frame(PatientID=Test.ihc$PatientID,IHC=Test.ihc$IHC,stringsAsFactors=F) → even though Test.ihc has those two columns </p>
 
             <p class="extraPadding"> 1) Setting the global variable for PAM50 function to use:</p> <hr>
-                <p> paramDir              = "./PAM50/bioclassifier_R/" → PAM50dir from below function param, PAM50 is provided here. <br>
-                    Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>. <br>
-                    <span class="indent">*For more information and detailed instructions, please scroll down to the Bioclassifier section</span> </p>
-                <p> inputDir              = "./Call_wth_IHCMd/" ;dir.create(inputDir) → Warning if directory exists. <br>
-                    <span class="indent">*It is safe to ignore the warning <br></span> </p>
-                <p> The input data matrix as a tab delimited text file </p>
-                <p> predFiles             = "./Rdat/TEST_pam_mat.txt" → Provided inputFile for predictions. <br>
-                    <span class="indent">write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep="\t", col.name=NA) </span> </p>
-                <p> short                 = "IHC.Mdns" → short name that will be used for output files. <br>
-                    <span class="indent">*ANY name is fine </span> </p>
-                <p> calibrationParameters = "Mdns.ihc" → used for NM.mdns in function below, suffix for naming int-sbs column in o/p. </p>
-                <p> hasClinical 	      = FALSE → We do not use clinical info anyways. </p>
-                <p> collapseMethod	      = "mean" → Can be mean or iqr (probe with max iqr is selected). <br>
-                    <span class="indent">*Pertains only to micorarray data</span> </p>
-                <p> Out.mdns.fl           = "mdns_TEST_IHC.txt" → Where new medians will be written <br>
-                    <span class="indent">*Used for mdns.outFile </span> </p>
-                <p> calibrationFile       = paste(paramDir,Out.mdns.fl,sep="/") → mdns.outFile below <br>
-                    <span class="indent">***DO NOT change this </span></p>
-
+<pre class="codeBlock">
+paramDir              = "./PAM50/bioclassifier_R/" <span class="comment"># PAM50dir from below function param -- PAM50 is provided here.</span>
+                        <span class="comment"># Obtained from <a href="https://genome-publications.bioinf.unc.edu/PAM50/" title="PAM50 Link" target="_blank"> https://genome-publications.bioinf.unc.edu/PAM50/</a>.</span>
+                        <span class="comment"># *For more information and detailed instructions, please read the Bioclassifier section.</span>
+inputDir              = "./Call_wth_IHCMd/" ;<span class="kw">dir.create</span>(inputDir) <span class="comment"># Warning if directory exists.</span>
+                        <span class="comment"># *It is safe to ignore the warning.</span>
+                        <span class="comment"># The input data matrix as a tab delimited text file.</span>
+predFiles             = "./Rdat/TEST_pam_mat.txt" <span class="comment"># Provided inputFile for predictions.</span>
+                        <span class="comment"># write.table(Test.matrix, "./Rdat/TEST_pam_mat.txt", sep = "\t", col.name = NA)</span>
+short                 = "IHC.Mdns" <span class="comment"># Short name that will be used for output files -- ANY name is fine.</span>
+calibrationParameters = "Mdns.ihc" <span class="comment"># Used for NM.mdns in function below -- Suffix for naming int-sbs column in o/p.</span>
+hasClinical 	      = FALSE <span class="comment"># We do not use clinical info anyways. </span>
+collapseMethod	      = "mean" <span class="comment"># Can be mean or iqr (probe with max iqr is selected).</span>
+                        <span class="comment"># *Pertains only to micorarray data.</span>
+Out.mdns.fl           = "mdns_TEST_IHC.txt" <span class="comment"># Where new medians will be written -- Used for mdns.outFile</span>
+calibrationFile       = <span class="kw">paste</span>(paramDir, Out.mdns.fl, <span class="dt">sep = </span><span class="str">"/"</span>) <span class="comment"># mdns.outFile below -- *DO NOT change this*</span> 
+</pre>
             <p class="extraPadding"> 2) Calling function to make primary ER-balanced set and subsequent conventional intrinsic subtype </p> <hr>
             <p> LIST is returned and the elements are: <br>
-                <span class="indent">Int.sbs = Intrinsic subtype</span> <br>
-                <span class="indent">score.fl = PAM50 o/p score</span>  <br>
-                <span class="indent">mdns.fl = medians file</span>  <br>
-                <span class="indent">SBS.colr = PAM50 o/p subtypeColors</span>  <br>
-                <span class="indent">outList = PAM50 o/p outList</span> <br>
-                <span class="indent">sbs.IHCmd = makeCalls.ihc(df.cln, seed=118, mat = Test.matrix, NM.mdns = calibrationParameters, PAM50dir = paramDir, 
-                    mdns.outFile = Out.mdns.fl) </span> </p>
+<pre class="codeBlock">
+<span class="comment"># Int.sbs = Intrinsic subtype
+# score.fl = PAM50 o/p score
+# mdns.fl = medians file
+# SBS.colr = PAM50 o/p subtypeColors
+# outList = PAM50 o/p outList</span>
 
-            <p> save(sbs.IHCmd,file="./Rdat/Intrinsic-TESTdata_with_ihcMedians.Rdat") <br>
-                addmargins(table(sbs.IHCmd$Int.sbs$Int.SBS.Mdns.ihc, sbs.IHCmd$Int.sbs$IHC)) → to check consistency </p>
+sbs.IHCmd = <span class="kw">makeCalls.ihc</span>(df.cln, <span class="dt">seed =</span> 118, <span class="dt">mat =</span> Test.matrix, <span class="dt">NM.mdns =</span> calibrationParameters, <span class="dt">PAM50dir =</span> paramDir, <span class="dt">mdns.outFile =</span> Out.mdns.fl)
+</pre>
+<pre class="codeBlock">
+<span class="kw">save</span>(sbs.IHCmd, <span class="dt">file =</span> <span class="str">"./Rdat/Intrinsic-TESTdata_with_ihcMedians.Rdat"</span>)
+<span class="kw">addmargins</span>(<span class="kw">table</span>(sbs.IHCmd$Int.sbs$Int.SBS.Mdns.ihc, sbs.IHCmd$Int.sbs$IHC)) <span class="comment"># To check consistency.
 
-            <p> 8% consistency improvement (b/n conventional and refined intrinsic) with this TEST data </p>
-
+# 8% consistency improvement (b/n conventional and refined intrinsic) with this TEST data.</span>
+</pre>
             <p></p>
             <p> <b>OPTIONAL code to make PCA PLOT</b> </p>
-            <p> library(DESeq)<br>
-                library(gplots)<br>
-                pData = data.frame(condition=Test.ihc$IHC)<br>
-                rownames(pData) = Test.ihc$PatientID<br>
-                phenoData = new("AnnotatedDataFrame", data=pData)#, varMetadata=Metadata<br>
-                XSet      = ExpressionSet(assayData=Test.matrix, phenoData=phenoData)<br>
-                my.plotPCA(XSet, intgroup=pData$condition, ablne=2.4,colours = c("hotpink","darkblue","lightblue","lightblue3","red"))</p>
-        </div>
+<pre class="codeBlock">
+<span class="kw">library</span>(DESeq)
+<span class="kw">library</span>(gplots)
+
+pData           = <span class="kw">data.frame</span>(<span class="dt">condition =</span> Test.ihc$IHC)
+rownames(pData) = Test.ihc$PatientID
+phenoData       = <span class="kw">new</span>(<span class="str">"AnnotatedDataFrame"</span>, <span class="dt">data =</span> pData)#, varMetadata = Metadata
+XSet            = <span class="kw">ExpressionSet</span>(<span class="dt">assayData =</span> Test.matrix, <span class="dt">phenoData =</span> phenoData)
+
+my.plotPCA(XSet, <span class="dt">intgroup =</span> pData$condition, <span class="dt">ablne =</span> 2.4, <span class="dt">colours =</span> c("hotpink","darkblue","lightblue","lightblue3","red"))
+</pre>
+</div>
 <!-------------------------------------------------------------------------------------------------------------->
         <div id="instructionsPageSubpageTwo" class="hidden">
             <h3>Bioclassifier Instructions</h3>

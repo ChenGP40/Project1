@@ -12,7 +12,7 @@ body {
 }
 
 p {
-    font-size: 17px;
+    font-size: 16px;
     text-align: left;
     line-height: 1.75;
     padding-top: 1em;
@@ -189,7 +189,7 @@ h3 {
 }
 
 .sideNavLinks {
-    font-size: 17px;
+    font-size: 16px;
     color: #337ab7;
     padding: .3em;
 }
@@ -217,11 +217,21 @@ h3 {
     padding-left: 2em;
 }
 
+.descriptionBlock {
+    display: block;
+    margin-top: .5em;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
 .codeBlock {
     display: block;
     padding: .5em;
     margin-top: .5em;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.75;
     color: #333;
     /* white-space: pre-wrap; */
@@ -230,16 +240,20 @@ h3 {
     background-color: #f5f5f5;
     border: 1px solid #ccc;
     border-radius: 4px;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
-.g {
+.kw {
     color: #007020;
     font-weight: bold;
 }
 
 .str {
     color: #4070a0;
+}
+
+.dt {
+    color: #902000;
 }
 
 .comment {
